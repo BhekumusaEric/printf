@@ -1,13 +1,15 @@
 #include "main.h"
+
 void print_buffer(char buffer[], int *buff_ind);
+
 /**
- * _printf - This is a PrintF Function custom made
- * @format: format specifiers ...
- * Return: Printed characters ... yes
+ * _printf - Printf function ,,,.
+ * @format: format.....
+ * Return: Printed characters
  */
 int _printf(const char *format, ...)
 {
-	int x, printed = 0, printed_chars = 0;
+	int i, printed = 0, printed_chars = 0;
 	int flags, width, precision, size, buff_ind = 0;
 	va_list list;
 	char buffer[BUFF_SIZE];
@@ -17,25 +19,25 @@ int _printf(const char *format, ...)
 
 	va_start(list, format);
 
-	for (x = 0; format && format[i] != '\0'; x++)
+	for (i = 0; format && format[i] != '\0'; i++)
 	{
-		if (format[x] != '%')
+		if (format[i] != '%')
 		{
-			buffer[buff_ind++] = format[x];
+			buffer[buff_ind++] = format[i];
 			if (buff_ind == BUFF_SIZE)
 				print_buffer(buffer, &buff_ind);
-			/* write(1, &format[x], 1);*/
+			/* write(1, &format[i], 1);*/
 			printed_chars++;
 		}
 		else
 		{
 			print_buffer(buffer, &buff_ind);
-			flags = get_flags(format, &x);
-			width = get_width(format, &x, list);
-			precision = get_precision(format, &x, list);
-			size = get_size(format, &x);
-			++x;
-			printed = handle_print(format, &x, list, buffer,
+			flags = get_flags(format, &i);
+			width = get_width(format, &i, list);
+			precision = get_precision(format, &i, list);
+			size = get_size(format, &i);
+			++i;
+			printed = handle_print(format, &i, list, buffer,
 				flags, width, precision, size);
 			if (printed == -1)
 				return (-1);
@@ -51,9 +53,9 @@ int _printf(const char *format, ...)
 }
 
 /**
- * print_buffer - Prints the contents of the buffer if it exist and check if it exits
- * @buffer: Array of characters .
- * @buff_ind: Index at which to add next char, represents the length. ....
+ * print_buffer - Prints the contents of the buffer if it exist
+ * @buffer: Array of chars
+ * @buff_ind: Index at which to add next char, represents the length.
  */
 void print_buffer(char buffer[], int *buff_ind)
 {
@@ -62,3 +64,4 @@ void print_buffer(char buffer[], int *buff_ind)
 
 	*buff_ind = 0;
 }
+
